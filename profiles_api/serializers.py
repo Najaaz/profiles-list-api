@@ -1,5 +1,8 @@
+from django.contrib.admin import filters
+from django.contrib.auth import models
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from profiles_api import models
 
 class HelloSerializer(serializers.Serializer):
     # To test the API view
@@ -25,3 +28,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
         )
 
         return user
+
+
+
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.ProfileFeed
+        fields = ('id', 'user_profile', 'status_text', 'created_on')
+        extra_kwargs = {'user_profile':{"read_only":True}}
+
